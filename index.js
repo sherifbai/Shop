@@ -10,6 +10,9 @@ const authRouter = require('./routes/auth')
 const goodsRouter = require('./routes/goods')
 
 
+const connection = require('./database/connection')
+
+
 const app = express()
 
 
@@ -60,10 +63,4 @@ app.use(function (error, req, res, next) {
     res.status(status).json({ message: message, data: data, status: status });
 });
 
-
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}).then(result => {
-    app.listen(3000)
-    console.log("Connected")
-}).catch(err => {
-    console.log(err)
-})
+connection.connect(app, url)
